@@ -12,6 +12,22 @@ app.get('/', function (request, response) {
     response.send('Hello World!');
 })
 
+var prepareURL = function (selectedDate) {
+    var formattedDate = "";
+    var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    formattedDate = selectedDate.getDate() < 10 ? "0" + selectedDate.getDate() : selectedDate.getDate();
+    formattedDate += months[selectedDate.getMonth()];
+    formattedDate += selectedDate.getFullYear();
+    return "https://www.nseindia.com/content/historical/EQUITIES/" + selectedDate.getFullYear() + "/" + months[selectedDate.getMonth()] + "/cm" + formattedDate + "bhav.csv.zip";
+};
+var getFormattedDate = function (selectedDate) {
+    var formattedDate = "";
+    var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    formattedDate = selectedDate.getDate() < 10 ? "0" + selectedDate.getDate() : selectedDate.getDate();
+    formattedDate += months[selectedDate.getMonth()];
+    formattedDate += selectedDate.getFullYear();
+    return formattedDate;
+};
 
 app.get('/api/:date', function 
 (req, res) {
