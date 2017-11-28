@@ -1,0 +1,9 @@
+.highlight
+{
+    background-color: yellow !important;
+}
+.ui-grid-cell-contents
+{
+    font-size: 11px;
+    font-family: "Segoe UI";
+}
