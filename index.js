@@ -8,15 +8,15 @@ var test = false;
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function (request, response) {
-    response.send('Hello World!');
-});
-app.get('/index.html', function (request, response) {
-    response.sendFile('index.html');
-});
-app.get('/home.html', function (request, response) {
-    response.sendFile('home.html');
-});
+//app.get('/', function (request, response) {
+//    response.send('Hello World!');
+//});
+//app.get('/index.html', function (request, response) {
+//    response.sendFile('index.html');
+//});
+//app.get('/home.html', function (request, response) {
+//    response.sendFile('home.html');
+//});
 
 var prepareURL = function (selectedDate) {
     var formattedDate = "";
