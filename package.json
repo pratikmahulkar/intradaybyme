@@ -1,0 +1,22 @@
+{
+  "name": "intradaybyme",
+  "version": "1.0.0",
+  "description": "demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pratikmahulkar/intradaybyme.git"
+  },
+  "author": "pratik m",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pratikmahulkar/intradaybyme/issues"
+  },
+  "homepage": "https://github.com/pratikmahulkar/intradaybyme#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
