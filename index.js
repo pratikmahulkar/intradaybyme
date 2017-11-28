@@ -10,6 +10,9 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (request, response) {
     response.send('Hello World!');
+});
+app.get('/index.html', function (request, response) {
+    response.sendFile('index.html');
 })
 
 var prepareURL = function (selectedDate) {
