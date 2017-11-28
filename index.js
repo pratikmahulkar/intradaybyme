@@ -6,7 +6,7 @@ var fs = require('fs');
 var unzip = require("unzip");
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-
+var test = false;
 var prepareURL = function (selectedDate) {
     var formattedDate = "";
     var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -23,6 +23,9 @@ var getFormattedDate = function (selectedDate) {
     formattedDate += selectedDate.getFullYear();
     return formattedDate;
 };
+app.listen(app.get('port'), function () {
+    console.log("Node is running at localhost:" + app.get('port'));
+})
 
 app.get('/api/:date', function (req, res) {
     var date = req.params['date'];
@@ -31,14 +34,9 @@ app.get('/api/:date', function (req, res) {
     var header = null;
     var rows = [];
     var formattedDate = getFormattedDate(new Date(date));
-    var file = fs.createWriteStream(formattedDate + ".zip");
-    var request = http.request(url);
-    request.setHeader('Content-Type', 'text/zip');
-    request.setHeader('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/12.0');
-    request.end();
-    request.once('response', function (response) {
-        response.pipe(file).on('close', function () {
-            fs.createReadStream(formattedDate + '.zip')
+
+    if (test) {
+        fs.createReadStream(formattedDate + '.zip')
             .pipe(unzip.Parse())
             .on('entry', function (entry) {
                 var fileName = entry.path;
@@ -58,10 +56,36 @@ app.get('/api/:date', function (req, res) {
                     console.log('end');
                 });
             });
+    } else {
+        var file = fs.createWriteStream(formattedDate + ".zip");
+        var request = http.request(url);
+        request.setHeader('Content-Type', 'text/zip');
+        request.setHeader('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/12.0');
+        request.end();
+        request.once('response', function (response) {
+            response.pipe(file).on('close', function () {
+                fs.createReadStream(formattedDate + '.zip')
+            .pipe(unzip.Parse())
+            .on('entry', function (entry) {
+                var fileName = entry.path;
+                var type = entry.type; // 'Directory' or 'File'
+                var size = entry.size;
+                entry.pipe(fs.createWriteStream(formattedDate + '.csv'));
+                entry.autodrain();
+            })
+            .on('close', function () {
+                csvtojson()
+                .fromFile(formattedDate + ".csv")
+                .on('json', function (data) {
+                    rows.push(data);
+                })
+                .on('done', function () {
+                    res.json(rows);
+                    console.log('end');
+                });
+            });
+            });
         });
-    });
+    }
 
 });
-app.listen(app.get('port'), function () {
-    console.log("Node is running at localhost:" + app.get('port'));
-})
