@@ -13,7 +13,10 @@ app.get('/', function (request, response) {
 });
 app.get('/index.html', function (request, response) {
     response.sendFile('index.html');
-})
+});
+app.get('/home.html', function (request, response) {
+    response.sendFile('home.html');
+});
 
 var prepareURL = function (selectedDate) {
     var formattedDate = "";
