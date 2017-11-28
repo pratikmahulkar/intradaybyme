@@ -4,7 +4,7 @@ var csvtojson = require('csvtojson');
 var http = require('https');
 var fs = require('fs');
 var unzip = require("unzip");
-
+var test = false;
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
