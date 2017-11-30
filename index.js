@@ -4,7 +4,7 @@ var csvtojson = require('csvtojson');
 var http = require('https');
 var fs = require('fs');
 var unzip = require("unzip");
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 7000));
 app.use(express.static(__dirname + '/public'));
 var test = false;
 var prepareURL = function (selectedDate) {
@@ -30,33 +30,21 @@ app.listen(app.get('port'), function () {
 app.get('/api/:date', function (req, res) {
     var date = req.params['date'];
     console.log(req.params);
-    var url = prepareURL(new Date(date));
-    var header = null;
     var rows = [];
     var formattedDate = getFormattedDate(new Date(date));
-
-    if (test) {
-        fs.createReadStream(formattedDate + '.zip')
-            .pipe(unzip.Parse())
-            .on('entry', function (entry) {
-                var fileName = entry.path;
-                var type = entry.type; // 'Directory' or 'File'
-                var size = entry.size;
-                entry.pipe(fs.createWriteStream(formattedDate + '.csv'));
-                entry.autodrain();
-            })
-            .on('close', function () {
-                csvtojson()
-                .fromFile(formattedDate + ".csv")
-                .on('json', function (data) {
-                    rows.push(data);
-                })
-                .on('done', function () {
-                    res.json(rows);
-                    console.log('end');
-                });
-            });
+    var ifFileExists = fs.existsSync(formattedDate + '.csv');
+    if (ifFileExists) {
+        csvtojson()
+        .fromFile(formattedDate + ".csv")
+        .on('json', function (data) {
+            rows.push(data);
+        })
+        .on('done', function () {
+            res.json(rows.slice(0, 10));
+            console.log('File Found!');
+        });
     } else {
+        var url = prepareURL(new Date(date));
         var file = fs.createWriteStream(formattedDate + ".zip");
         var request = http.request(url);
         request.setHeader('Content-Type', 'text/zip');
@@ -67,9 +55,6 @@ app.get('/api/:date', function (req, res) {
                 fs.createReadStream(formattedDate + '.zip')
             .pipe(unzip.Parse())
             .on('entry', function (entry) {
-                var fileName = entry.path;
-                var type = entry.type; // 'Directory' or 'File'
-                var size = entry.size;
                 entry.pipe(fs.createWriteStream(formattedDate + '.csv'));
                 entry.autodrain();
             })
@@ -80,12 +65,11 @@ app.get('/api/:date', function (req, res) {
                     rows.push(data);
                 })
                 .on('done', function () {
-                    res.json(rows);
+                    res.json(rows.slice(0, 10));
                     console.log('end');
                 });
             });
             });
         });
     }
-
 });
