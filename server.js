@@ -58,12 +58,9 @@ app.get('/api/:date', function (req, res) {
             rows.push(data);
         })
         .on('done', function () {
-<<<<<<< HEAD
             var result = processRows(rows, limit);
             res.json(result);
-=======
             res.json(rows.slice(0, 10));
->>>>>>> 45ae8cdc9cae6d616351e1e6e37e6472e0f9cd75
             console.log('File Found!');
         });
     } else {
@@ -96,8 +93,4 @@ app.get('/api/:date', function (req, res) {
             });
         });
     }
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 45ae8cdc9cae6d616351e1e6e37e6472e0f9cd75

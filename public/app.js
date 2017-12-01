@@ -520,7 +520,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$interval', 'uiGridC
                     $scope.AVGTOTTRDVAL = ($scope.AVGTOTTRDVAL / data.length).toFixed(2);
                     $scope.AVGTOTTRDQTY = ($scope.AVGTOTTRDQTY / data.length).toFixed(2);
                 })
-                .error(function () {
+                .error(function (error) {
                     //$scope.callsPending--;
                 });
 
