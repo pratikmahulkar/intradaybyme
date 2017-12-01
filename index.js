@@ -23,12 +23,30 @@ var getFormattedDate = function (selectedDate) {
     formattedDate += selectedDate.getFullYear();
     return formattedDate;
 };
+var processRows = function (rows, count) {
+    var topTOTTRDVAL = rows.sort(function (a, b) { return b.TOTTRDVAL - a.TOTTRDVAL; }).splice(0, count);
+    var topTOTTRDQTY = rows.sort(function (a, b) { return b.TOTTRDQTY - a.TOTTRDQTY; }).splice(0, count);
+    var result = unique(topTOTTRDVAL.concat(topTOTTRDQTY));
+    return result;
+};
+var unique = function (rows) {
+    var seen = {};
+    var filteredData = [];
+    rows.forEach(function (row) {
+        if (!seen.hasOwnProperty(row.SYMBOL)) {
+            seen[row.SYMBOL] = row.SYMBOL;
+            filteredData.push(row);
+        }
+    });
+    return filteredData;
+};
 app.listen(app.get('port'), function () {
     console.log("Node is running at localhost:" + app.get('port'));
 })
 
 app.get('/api/:date', function (req, res) {
     var date = req.params['date'];
+    var limit = 50;
     console.log(req.params);
     var rows = [];
     var formattedDate = getFormattedDate(new Date(date));
@@ -40,7 +58,8 @@ app.get('/api/:date', function (req, res) {
             rows.push(data);
         })
         .on('done', function () {
-            res.json(rows.slice(0, 10));
+            var result = processRows(rows, limit);
+            res.json(result);
             console.log('File Found!');
         });
     } else {
@@ -53,11 +72,11 @@ app.get('/api/:date', function (req, res) {
         request.once('response', function (response) {
             response.pipe(file).on('close', function () {
                 fs.createReadStream(formattedDate + '.zip')
-            .pipe(unzip.Parse())
-            .on('entry', function (entry) {
-                entry.pipe(fs.createWriteStream(formattedDate + '.csv'));
-                entry.autodrain();
-            })
+                .pipe(unzip.Parse())
+                .on('entry', function (entry) {
+                    entry.pipe(fs.createWriteStream(formattedDate + '.csv'));
+                    entry.autodrain();
+                })
             .on('close', function () {
                 csvtojson()
                 .fromFile(formattedDate + ".csv")
@@ -65,7 +84,8 @@ app.get('/api/:date', function (req, res) {
                     rows.push(data);
                 })
                 .on('done', function () {
-                    res.json(rows.slice(0, 10));
+                    var result = processRows(rows, limit);
+                    res.json(result);
                     console.log('end');
                 });
             });
