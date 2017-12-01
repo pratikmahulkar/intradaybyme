@@ -1,4 +1,4 @@
-﻿var express = require('express');
+var express = require('express');
 var app = express();
 var csvtojson = require('csvtojson');
 var http = require('https');
@@ -32,7 +32,18 @@ app.get('/api/:date', function (req, res) {
     console.log(req.params);
     var rows = [];
     var formattedDate = getFormattedDate(new Date(date));
-   
+    var ifFileExists = fs.existsSync(formattedDate + '.csv');
+    if (ifFileExists) {
+        csvtojson()
+        .fromFile(formattedDate + ".csv")
+        .on('json', function (data) {
+            rows.push(data);
+        })
+        .on('done', function () {
+            res.json(rows.slice(0, 10));
+            console.log('File Found!');
+        });
+    } else {
         var url = prepareURL(new Date(date));
         var file = fs.createWriteStream(formattedDate + ".zip");
         var request = http.request(url);
@@ -60,5 +71,5 @@ app.get('/api/:date', function (req, res) {
             });
             });
         });
-    
+    }
 });
