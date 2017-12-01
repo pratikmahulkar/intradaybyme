@@ -6,7 +6,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$interval', 'uiGridC
         $scope.selectedRows = [];
         $scope.gridApi;
         $scope.selectedDate = new Date();
-        $scope.selectedDate.setDate(14);
         $scope.gridOptions = {
             data: 'myData',
             enableCellEditOnFocus: true,
