@@ -30,7 +30,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$interval', 'uiGridC
                     cellClass: "highlight",
                     filters: [{
                         condition: uiGridConstants.filter.GREATER_THAN,
-                        placeholder: 'greater than'
+                        placeholder: 'greater than',
+                        term: "101"
                     },
                         {
                             condition: uiGridConstants.filter.LESS_THAN,
